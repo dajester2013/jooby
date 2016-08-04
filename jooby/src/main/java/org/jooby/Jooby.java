@@ -670,6 +670,8 @@ public class Jooby implements Routes, LifeCycle, Registry {
 
   private String numberFormat;
 
+  private boolean http2;
+
   public Jooby() {
     this(null);
   }
@@ -3855,13 +3857,18 @@ public class Jooby implements Routes, LifeCycle, Registry {
   }
 
   /**
-   * Set the HTTPS port.
+   * Set the HTTPS port to use.
    *
    * @param port HTTPS port.
    * @return This instance.
    */
   public Jooby securePort(final int port) {
     this.securePort = port;
+    return this;
+  }
+
+  public Jooby http2() {
+    this.http2 = true;
     return this;
   }
 
@@ -4466,6 +4473,7 @@ public class Jooby implements Routes, LifeCycle, Registry {
         .withValue("application.lang", ConfigValueFactory.fromAnyRef(lang))
         .withValue("application.tz", ConfigValueFactory.fromAnyRef(tz))
         .withValue("application.numberFormat", ConfigValueFactory.fromAnyRef(nf))
+        .withValue("server.http2.enabled", ConfigValueFactory.fromAnyRef(http2))
         .withValue("runtime.processors", ConfigValueFactory.fromAnyRef(processors))
         .withValue("runtime.processors-plus1", ConfigValueFactory.fromAnyRef(processors + 1))
         .withValue("runtime.processors-plus2", ConfigValueFactory.fromAnyRef(processors + 2))
